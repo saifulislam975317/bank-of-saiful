@@ -11,10 +11,13 @@ document.getElementById("loginBtn").addEventListener("click", function () {
 
 document.getElementById("depositBtn").addEventListener("click", function () {
     const inputDepositNumber = getInputNumber("inputDeposit");
+    if(inputDepositNumber>0){
+        updateDepositTk("depositAmount", inputDepositNumber)
+        updateDepositTk("balance", inputDepositNumber)
+        document.getElementById("inputDeposit").value = '';
+    }
 
-    updateDepositTk("depositAmount", inputDepositNumber)
-    updateDepositTk("balance", inputDepositNumber)
-    document.getElementById("inputDeposit").value = '';
+   
 
 })
 
@@ -23,16 +26,24 @@ function updateDepositTk(id, inputDepositNumber) {
     const depositAmountNumber = parseFloat(depositAmount);
     const totalDeposit = inputDepositNumber + depositAmountNumber;
     document.getElementById(id).innerText = totalDeposit;
+   
 }
 
 
 document.getElementById("withdrawBtn").addEventListener("click", function () {
-    const inputWithdrawNumber = getInputNumber("inputWithdraw")
+    const inputWithdrawNumber = getInputNumber("inputWithdraw");
+    
+    const balance = document.getElementById("balance").innerText;
+    const balanceNumber = parseFloat(balance);
+   
+    if(inputWithdrawNumber> 0 && inputWithdrawNumber <= balanceNumber){
+        updateWithdrawTk("withdrawAmount", inputWithdrawNumber)
+        updateWithdrawTk("balance", -1 * inputWithdrawNumber);
+        document.getElementById("inputWithdraw").value = "";
+    
+    }
 
-    updateWithdrawTk("withdrawAmount", inputWithdrawNumber)
-    updateWithdrawTk("balance", -1 * inputWithdrawNumber);
-    document.getElementById("inputWithdraw").value = "";
-
+   
 })
 
 function updateWithdrawTk(id, inputWithdrawNumber) {
